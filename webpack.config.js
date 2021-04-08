@@ -6,6 +6,9 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const Dotenv = require('dotenv-webpack');
 
+//Plugin para PWA
+const CopyPlugin = require('copy-webpack-plugin');
+
 module.exports = {
   entry: './src/index.js',
   output: {
@@ -53,6 +56,13 @@ module.exports = {
       filename: 'assets/[name].css',
     }),
     new Dotenv(),
+    new CopyPlugin({ //Configuración para le plugin
+      patterns: [
+        { from: 'public/manifest.json', to: '' },
+        { from: 'public/service-worker.js', to: '' },
+        { from: 'public/icon.png', to: 'assets' },
+      ],
+    }),
   ],
   devServer: {
     //con devServer creamos un servidor de trabajo local con el cual
